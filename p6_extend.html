@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>extend</title>
+    <link rel="stylesheet" href="./js/leaflet/leaflet.css" />
+    <script src="./js/leaflet/leaflet.js"></script>
+  </head>
+  <body>
+    <script>
+        // leaflet添加新类
+
+        let MyClass = L.Class.extend({
+            info:"Hello, Welcome to my website",
+            printInfo:function(){
+                return this.info
+            }
+        })
+
+        // let myInstance = new MyClass()
+        // console.log(myInstance.printInfo(),"method");
+
+        MyClass.include({
+            height:500,
+            compute:function(){
+                return this.height
+            }
+        })
+
+        let instance = new MyClass()
+        // console.log(instance.compute());
+
+        // 初始化函数
+        let DrawCircle = L.Class.extend({
+            options:{
+                color:'red',
+                radius:10
+            },
+
+            initialize:function(name,options){
+                this.name = name,
+                L.setOptions(this,options)
+            }
+        })
+
+        let myCircle = new DrawCircle('c1',{
+            color:'yellow',
+        })
+
+        console.log(myCircle.name,"name");
+        console.log(myCircle.options);
+        console.log(myCircle.options.radius);
+
+    </script>
+  </body>
+</html>

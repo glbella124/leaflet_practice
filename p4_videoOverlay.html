@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>videoOverlay</title>
+    <link rel="stylesheet" href="./js/leaflet/leaflet.css" />
+    <script src="./js/leaflet/leaflet.js"></script>
+    <style>
+      #map {
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      let map = L.map("map").setView([37.8, -96], 4);
+
+      let osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      let videoUrls = [
+        "https://www.mapbox.com/bites/00188/patricia_nasa.webm",
+        "https://www.mapbox.com/bites/00188/patricia_nasa.mp4",
+      ];
+      let errorOverlayUrl =
+        "https://cdn-icons-png.flaticon.com/512/110/110686.png";
+      let latLngBounds = L.latLngBounds([
+        [32, -130],
+        [13, -100],
+      ]);
+
+      let videoOverlay = L.videoOverlay(videoUrls, latLngBounds, {
+        opacity: 0.7,
+        errorOverlayUrl: errorOverlayUrl,
+        interactive: true,
+        autoplay: true,
+        muted: true,
+        playsInline: true,
+      }).addTo(map)
+    </script>
+  </body>
+</html>

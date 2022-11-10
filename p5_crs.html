@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crs</title>
+    <link rel="stylesheet" href="./js/leaflet/leaflet.css" />
+    <script src="./js/leaflet/leaflet.js"></script>
+    <style>
+      #map {
+        height: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      let map = L.map("map", {
+        crs: L.CRS.Simple,
+        minZoom: -5,
+      });
+
+      let bounds = [
+        [0, 0],
+        [1000, 1000],
+      ];
+      let image = L.imageOverlay(
+        "./js/leaflet/images/uqm_map_full.png",
+        bounds
+      ).addTo(map);
+      map.fitBounds(bounds);
+
+      //   let sol = L.latLng([145, 175.2]);
+      //   console.log(sol,"sol");
+      //   L.marker(sol).addTo(map);
+      //   map.setView([70, 120], 1);
+
+    //   将纬经度转为经纬度
+      let yx = L.latLng;
+      let xy = function (x, y) {
+        if (L.Util.isArray(x)) {
+          // When doing xy([x, y]);
+          return yx(x[1], x[0]);
+        }
+        return yx(y, x); // When doing xy(x, y);
+      };
+
+        var sol = xy(175.2, 145.0);
+        console.log(sol,"sol");
+      //   var mizar = xy(41.6, 130.1);
+      //   var kruegerZ = xy(13.4, 56.5);
+      //   var deneb = xy(218.7, 8.3);
+
+      let pointArray = [
+        {
+          id: 1,
+          name: "Sol",
+          x: 175.2,
+          y: 145.0,
+        },
+        {
+          id: 2,
+          name: "Mizar",
+          x: 41.6,
+          y: 130.1,
+        },
+        {
+          id: 3,
+          name: "Krueger-Z",
+          x: 13.4,
+          y: 56.5,
+        },
+        {
+          id: 4,
+          name: "Deneb",
+          x: 218.7,
+          y: 8.3,
+        },
+      ];
+
+      let pointCollection = []
+      pointArray.forEach((v)=>{
+        let point = xy(v.x,v.y)
+        pointCollection.push(point)
+        L.marker(point).addTo(map).bindPopup(v.name)
+      })
+
+      console.log(pointCollection,"pointCollection");
+
+      let travel = L.polyline(pointCollection).addTo(map)
+
+      //   L.marker(sol).addTo(map).bindPopup("Sol");
+      //   L.marker(mizar).addTo(map).bindPopup("Mizar");
+      //   L.marker(kruegerZ).addTo(map).bindPopup("Krueger-Z");
+      //   L.marker(deneb).addTo(map).bindPopup("Deneb");
+
+        // var travel = L.polyline([sol, deneb]).addTo(map);
+    </script>
+  </body>
+</html>
